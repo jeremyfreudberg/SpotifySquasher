@@ -7,6 +7,7 @@ module.exports = {
 
     var options = {
       url : 'https://api.spotify.com/v1/me/playlists',
+      qs : { limit : 50 },
       headers: { 'Authorization': 'Bearer ' + at },
       json: true
     };
