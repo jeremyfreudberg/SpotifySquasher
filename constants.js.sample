@@ -1,0 +1,5 @@
+module.exports = {
+  clientID : "my_client_id",
+  clientSecret : "my_client_secret",
+  redirectURI : "my_redirect_uri",
+}

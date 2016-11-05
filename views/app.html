@@ -1,0 +1,7 @@
+{% extends 'layout.html' %}
+{% block content %}
+<a href="/logout">Log Out</a><br /><br />
+{% for playlist in playlists %}
+  <li>{{ playlist['name'] }}</li>
+{% endfor %}
+{% endblock %}
