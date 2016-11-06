@@ -76,8 +76,10 @@ app.post('/squash', function(req, res){
   var toSquash = req.body;
   var pURIs = Object.keys(toSquash).map(function(key){return toSquash[key]});
   spotify.getTracks(accessTokenGlobal, pURIs, function(e,r){
-    var tracks = r['tracks'];
-    app.locals.tracks = tracks;
+    var allTracks = r['tracks'];
+    app.locals.tracks = allTracks;
+    var bad = 'spotify:local';
+    var tracks = allTracks.filter(function(s){ return s.indexOf(bad) < 0; });
     res.render('squash.html', { numTracks : tracks.length });
   });
 });
