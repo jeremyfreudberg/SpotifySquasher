@@ -1,9 +1,16 @@
 {% extends 'layout.html' %}
 {% block content %}
 <a href="/logout">Log Out</a><br /><br />
+<form action="/squash" method="post">
 {% for playlists in pl %}
 {% for playlist in playlists %}
-  <li>{{ playlist['name'] }}</li>
+  <input
+    type="checkbox"
+    name="{{ playlist['id'] }}"
+    value="{{ playlist['tracks']['href'] }}"
+  > {{ playlist['name'] }}<br />
 {% endfor %}
 {% endfor %}
+<input type="submit" value="Submit">
+</form>
 {% endblock %}

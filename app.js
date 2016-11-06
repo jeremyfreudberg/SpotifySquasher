@@ -1,6 +1,7 @@
 const express = require('express'),
       passport = require('passport'),
-      nunjucks = require('nunjucks');
+      nunjucks = require('nunjucks'),
+      bodyParser = require('body-parser');
  
 const SpotifyStrategy =
       require('passport-spotify').Strategy;
@@ -43,6 +44,8 @@ nunjucks.configure('views', {
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended : true }));
 
 app.get('/', function(req, res){
   res.render('index.html');
@@ -65,6 +68,10 @@ app.get('/app',
        var playlists_list = r['playlists_list'];
        res.render('app.html', { pl : playlists_list });
      });
+});
+
+app.post('/squash', function(req, res){
+  res.send(req.body);
 });
 
 app.get('/logout', function(req, res){
