@@ -1,0 +1,9 @@
+{% extends 'layout.html' %}
+{% block content %}
+<a href="/logout">Log Out</a><br /><br />
+Ok, ready to merge {{ numTracks }} songs into one great playlist.<br />
+<form action="/createPlaylist" method="get">
+Squashed Playlist Name: <input type="text" name="playlistName"><br />
+<input type="submit" value="Squash!">
+</form>
+{% endblock %}

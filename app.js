@@ -22,6 +22,7 @@ passport.deserializeUser(function(obj, done) {
 });
 
 var accessTokenGlobal;
+var userIDGlobal;
 
 passport.use(new SpotifyStrategy({
   clientID: clientID,
@@ -64,6 +65,7 @@ app.get('/auth/spotify',
 app.get('/app',
    passport.authenticate('spotify', {failureRedirect: '/auth/spotify' }),
    function(req, res){
+     userIDGlobal = req.user['id'];
      spotify.listPlaylists(accessTokenGlobal, function(e, r){
        var playlists_list = r['playlists_list'];
        res.render('app.html', { pl : playlists_list });
@@ -71,7 +73,26 @@ app.get('/app',
 });
 
 app.post('/squash', function(req, res){
-  res.send(req.body);
+  var toSquash = req.body;
+  var pURIs = Object.keys(toSquash).map(function(key){return toSquash[key]});
+  spotify.getTracks(accessTokenGlobal, pURIs, function(e,r){
+    var tracks = r['tracks'];
+    app.locals.tracks = tracks;
+    res.render('squash.html', { numTracks : tracks.length });
+  });
+});
+
+app.get('/createPlaylist', function(req, res){
+  var pn = req.query['playlistName'];
+  spotify.createPlaylist(accessTokenGlobal, userIDGlobal, pn, function(e,r){
+    var newPlaylistURL = r['url'];
+    app.locals.newPlaylistURL = newPlaylistURL;
+    res.redirect('/done');
+  });
+});
+
+app.get('/done', function(req, res){
+  res.send(app.locals.newPlaylistURL + "\n" + app.locals.tracks);
 });
 
 app.get('/logout', function(req, res){
