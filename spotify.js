@@ -72,6 +72,26 @@ module.exports = {
                  }, function(err, res, body) {
                       callback(null, { url : body['tracks']['href'] });
                  });
+  },
+
+  addTracks :
+  function addTracks(at, pu, chunks, callback){
+
+    async.each(chunks,
+      function(chunk, done) {
+        request.post({
+                      url : pu,
+                      headers : { 'Authorization' : 'Bearer ' + at },
+                      json : { uris : chunk }
+                     }, function(err, res, body) {
+                          done(null);
+                     });
+      },
+      function(err, results) {
+        callback(null);
+      }
+    );
+
   }
 
 }

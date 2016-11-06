@@ -92,7 +92,12 @@ app.get('/createPlaylist', function(req, res){
 });
 
 app.get('/done', function(req, res){
-  res.send(app.locals.newPlaylistURL + "\n" + app.locals.tracks);
+  var chunks = [], tracks = app.locals.tracks;
+  while (tracks.length > 0){ chunks.push(tracks.splice(0, 100)); }
+  var pu = app.locals.newPlaylistURL;
+  spotify.addTracks(accessTokenGlobal, pu, chunks, function(e,r){
+    res.render('success.html');
+  });
 });
 
 app.get('/logout', function(req, res){
