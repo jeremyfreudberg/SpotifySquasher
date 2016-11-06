@@ -88,6 +88,7 @@ app.get('/createPlaylist', function(req, res){
   var pn = req.query['playlistName'];
   spotify.createPlaylist(accessTokenGlobal, userIDGlobal, pn, function(e,r){
     var newPlaylistURL = r['url'];
+    app.locals.webLink = r['web'];
     app.locals.newPlaylistURL = newPlaylistURL;
     res.redirect('/done');
   });
@@ -98,7 +99,7 @@ app.get('/done', function(req, res){
   while (tracks.length > 0){ chunks.push(tracks.splice(0, 100)); }
   var pu = app.locals.newPlaylistURL;
   spotify.addTracks(accessTokenGlobal, pu, chunks, function(e,r){
-    res.render('success.html');
+    res.render('success.html', { link : app.locals.webLink });
   });
 });
 

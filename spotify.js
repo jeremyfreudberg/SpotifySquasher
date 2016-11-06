@@ -70,7 +70,10 @@ module.exports = {
                    headers : { 'Authorization' : 'Bearer ' + at },
                    json : { name : name }
                  }, function(err, res, body) {
-                      callback(null, { url : body['tracks']['href'] });
+                      callback(null, {
+                                       url : body['tracks']['href'],
+                                       web : body['external_urls']['spotify']
+                                     });
                  });
   },
 
