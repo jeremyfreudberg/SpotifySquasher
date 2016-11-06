@@ -62,8 +62,8 @@ app.get('/app',
    passport.authenticate('spotify', {failureRedirect: '/auth/spotify' }),
    function(req, res){
      spotify.listPlaylists(accessTokenGlobal, function(e, r){
-       playlists = r['body']['items'];
-       res.render('app.html', { playlists : playlists });
+       var playlists_list = r['playlists_list'];
+       res.render('app.html', { pl : playlists_list });
      });
 });
 
