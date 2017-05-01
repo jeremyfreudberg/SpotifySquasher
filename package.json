@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "main": "app.js",
   "author": "Jeremy Freudberg",
-  "license": "MIT",
+  "license": "GPLv3",
   "respository": {
     "type": "git",
     "url": "https://github.com/jeremyfreudberg/SpotifySquasher"
